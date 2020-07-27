@@ -23,12 +23,9 @@ def label_view(request, app_name, model_name, template_name="", multi=False,
     # Given objects are either an integer or a comma-separted list of
     # integers. Validate them and ignore invalid values. Also strip them
     # in case the user entered values by hand, such as '1, 2,3'.
-    object_list = []
-    for pk in request.GET['id'].split(","):
-        object_list.append(pk.strip())
-
+    object_list = [pk.strip() for pk in request.GET['id'].split(",")]
     # Check if at least one value survived this cleanup.
-    if len(object_list) == 0:
+    if not object_list:
         msg = 'No list or only invalid ids of objects given'
         return HttpResponseBadRequest(settings.DEBUG and msg or '')
 

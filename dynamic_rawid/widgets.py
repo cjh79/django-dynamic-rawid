@@ -72,11 +72,7 @@ class dynamic_rawidIdWidget(widgets.ForeignKeyRawIdWidget):
         context = super(dynamic_rawidIdWidget, self).get_context(name, value, attrs)
 
         model = None
-        if (VERSION[0] == 2):
-            model = self.rel.model
-        else:
-            model = self.rel.to
-
+        model = self.rel.model if (VERSION[0] == 2) else self.rel.to
         try:
             related_url = reverse('admin:%s_%s_changelist' % (
                 model._meta.app_label,

@@ -33,11 +33,7 @@ class dynamic_rawidFilter(admin.filters.FieldListFilter):
         super(dynamic_rawidFilter, self).__init__(
             field, request, params, model, model_admin, field_path)
 
-        if VERSION[0] == 2:
-            rel = field.remote_field
-        else:
-            rel = field.rel
-
+        rel = field.remote_field if VERSION[0] == 2 else field.rel
         self.form = self.get_form(request, rel, model_admin.admin_site)
 
     def choices(self, cl):
